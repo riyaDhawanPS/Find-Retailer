@@ -1,8 +1,8 @@
 {
-  "vendor": "vtex",
-  "name": "store-locator",
-  "version": "0.10.7",
-  "title": "Store Locator",
+  "vendor": "publicissapient",
+  "name": "find-retailer",
+  "version": "0.1.1",
+  "title": "find retailer",
   "description": "Integrates with the logistics module to provide Store Locator pages",
   "builders": {
     "store": "0.x",
