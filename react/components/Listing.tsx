@@ -58,7 +58,7 @@ const Listing: FC<any> = ({ items, onChangeCenter }) => {
                     <br />
                   </span>
                   <span className={handles.addressStoreAddressStreet}>
-                    {item.address.state ? `,${item.address.state}` : ''}
+                    {item.address.state ? `${item.address.state}` : ''}
                     {item.address.postalCode ? ` - ${item.address.postalCode}\n` : ''}
                     <br />
                   </span>
