@@ -11,8 +11,7 @@ import { injectIntl, FormattedMessage } from 'react-intl'
 import { graphql, useLazyQuery } from 'react-apollo'
 import { flowRight as compose } from 'lodash'
 import { Spinner } from 'vtex.styleguide'
-import { useCssHandles } from 'vtex.css-handles'
-
+import { useCssHandles, applyModifiers } from 'vtex.css-handles'
 import ORDER_FORM from './queries/orderForm.gql'
 import GET_STORES from './queries/getStores.gql'
 import GOOGLE_KEYS from './queries/GetGoogleMapsKey.graphql'
@@ -21,12 +20,14 @@ import Pinpoints from './components/Pinpoints'
 
 const CSS_HANDLES = [
   'container',
+  'containerTablet',
   'storesListCol',
   'storesList',
   'storesMapCol',
   'noResults',
   'listingMapContainer',
   'loadAll',
+  'spinnerContainer'
 ] as const
 
 const StoreList = ({
@@ -117,22 +118,18 @@ const StoreList = ({
       const [firstResult] = data.getStores.items
 
       const { latitude, longitude } = firstResult.address.location
-
-      const center = ofData.shippingData?.address?.geoCoordinates ?? [
-        longitude || long,
-        latitude || lat,
-      ]
+      const center = [longitude || long, latitude || lat]
 
       handleCenter(center)
     }
 
     const stores =
       data?.getStores?.items.sort((a, b) => {
-        if (a.distance < b.distance) {
+        if (a.address.number < b.address.number) {
           return -1
         }
 
-        if (a.distance > b.distance) {
+        if (a.address.number > b.address.number) {
           return 1
         }
 
@@ -140,49 +137,44 @@ const StoreList = ({
       }) ?? []
 
     return (
-      <div className={`flex flex-row ${handles.container}`}>
-        <div className={`flex-col w-30 ${handles.storesListCol}`}>
-          {loading && <Spinner />}
-          {!loading && !!data && stores.length > 0 && (
-            <div className={`overflow-auto h-100 ${handles.storesList}`}>
-              <Listing items={stores} onChangeCenter={handleCenter} />
-              {state.allLoaded && (
-                <span
-                  className={`mt2 link c-link underline-hover pointer ${handles.loadAll}`}
-                  onClick={() => {
-                    loadAll()
-                  }}
-                >
-                  <FormattedMessage id="store/load-all" />
-                </span>
+      <div
+        className={`flex ${handles.container} ${applyModifiers(handles.container, "listAndMapTablet")}`}>
+        {loading ? <div className={`${handles.spinnerContainer}`}><Spinner /></div>
+          :
+          <>
+            <div className={`${handles.storesListCol} ${applyModifiers(handles.storesListCol, "listAndMapTablet")}`}>
+              {!loading && !!data && stores.length > 0 && (
+                <div className={`overflow-auto h-100 ${handles.storesList} ${applyModifiers(handles.storesList, "listAndMapTablet")}`}>
+                  <Listing items={stores} onChangeCenter={handleCenter} />
+                </div>
+              )}
+              {!loading && !!data && stores.length === 0 && (
+                <div className={handles.noResults}>
+                  <h3 style={{ alignSelf: "center", textAlign: "center" }}>
+                    <FormattedMessage id="store/none-stores" />
+                  </h3>
+                </div>
               )}
             </div>
-          )}
-          {!loading && !!data && stores.length === 0 && (
-            <div className={handles.noResults}>
-              <h3>
-                <FormattedMessage id="store/none-stores" />
-              </h3>
+            <div className={`${handles.storesMapCol} ${applyModifiers(handles.storesMapCol, "listAndMapTablet")}`}>
+              {!loading &&
+                !!data &&
+                stores.length > 0 &&
+                googleMapsKeys?.logistics?.googleMapsKey && (
+                  <Pinpoints
+                    apiKey={googleMapsKeys.logistics.googleMapsKey}
+                    className={handles.listingMapContainer}
+                    items={data.getStores.items}
+                    zoom={16}
+                    center={state.center}
+                    icon={icon}
+                    iconWidth={iconWidth}
+                    iconHeight={iconHeight}
+                  />
+                )}
             </div>
-          )}
-        </div>
-        <div className={`flex-col w-70 ${handles.storesMapCol}`}>
-          {!loading &&
-            !!data &&
-            stores.length > 0 &&
-            googleMapsKeys?.logistics?.googleMapsKey && (
-              <Pinpoints
-                apiKey={googleMapsKeys.logistics.googleMapsKey}
-                className={handles.listingMapContainer}
-                items={data.getStores.items}
-                zoom={state.zoom}
-                center={state.center}
-                icon={icon}
-                iconWidth={iconWidth}
-                iconHeight={iconHeight}
-              />
-            )}
-        </div>
+          </>
+        }
       </div>
     )
   }

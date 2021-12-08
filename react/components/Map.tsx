@@ -30,7 +30,7 @@ const Map = (props: any) => {
     <GoogleMap
       zoom={zoom}
       center={{ lat, lng }}
-      mapContainerStyle={{ height: '100%' }}
+      mapContainerStyle={{ height: '100%', width: '100%' }}
     >
       <Marker icon={icon} position={{ lat, lng }} />
     </GoogleMap>

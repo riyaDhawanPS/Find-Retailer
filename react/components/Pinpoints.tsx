@@ -2,20 +2,15 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useState } from 'react'
-import { FormattedMessage } from 'react-intl'
+// import { FormattedMessage } from 'react-intl'
 import {
   GoogleMap,
   Marker,
   InfoWindow,
   useJsApiLoader,
 } from '@react-google-maps/api'
-import slugify from 'slugify'
-import { useRuntime } from 'vtex.render-runtime'
 import { useCssHandles } from 'vtex.css-handles'
 
-const Slugify = (str: string) => {
-  return slugify(str, { lower: true, remove: /[*+~.()'"!:@]/g })
-}
 
 const CSS_HANDLES = [
   'markerInfo',
@@ -37,13 +32,12 @@ const Pinpoints = (props: any) => {
 
   const handles = useCssHandles(CSS_HANDLES)
 
-  const { navigate } = useRuntime()
 
   const handleMarkState = (id: string) => {
     const markerState = !state.markerState[id]
       ? {
-          [id]: true,
-        }
+        [id]: true,
+      }
       : {}
 
     setState({
@@ -53,18 +47,6 @@ const Pinpoints = (props: any) => {
 
   const [lng, lat] = props.center
   const { zoom } = props
-
-  const goTo = (item: any) => {
-    const { state: _state, postalCode } = item.address
-
-    navigate({
-      page: 'store.storedetail',
-      params: {
-        slug: `${Slugify(`${item.name} ${_state} ${postalCode}`)}`,
-        store_id: String(item.id).replace('1_', ''),
-      },
-    })
-  }
 
   let icon: any = {
     url:
@@ -102,7 +84,9 @@ const Pinpoints = (props: any) => {
             onClick={() => {
               handleMarkState(item.id)
             }}
+            label={item.name}
           >
+
             {state.markerState[item.id] && (
               // ||
               //   (Object.getOwnPropertyNames(state.markerState).length === 0 &&
@@ -120,7 +104,6 @@ const Pinpoints = (props: any) => {
                   </span>
                   <br />
                   <span className={handles.markerInfoAddress}>
-                    {item.address.number ? `${item.address.number} ` : ''}
                     {item.address.street}
                     {item.address.city ? `, ${item.address.city}` : ''}
                     {item.address.state ? `, ${item.address.state}` : ''}
@@ -133,10 +116,9 @@ const Pinpoints = (props: any) => {
                     className={`mt2 link c-link underline-hover pointer ${handles.markerInfoLink}`}
                     onClick={(e) => {
                       e.preventDefault()
-                      goTo(item)
+
                     }}
                   >
-                    <FormattedMessage id="store/more-details" />
                   </span>
                 </div>
               </InfoWindow>
