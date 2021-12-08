@@ -37,7 +37,7 @@ const Listing: FC<any> = ({ items, onChangeCenter }) => {
           return (
             <li
               key={`key_${i}`}
-              className={`pointer mb0 ph3 pv5 ${!i ? handles.addressListFirstItem : ''
+              className={`mb0 ph3 pv5 ${!i ? handles.addressListFirstItem : ''
                 } ${handles.addressListItem} ${!i ? 'bt' : ''
                 } bb bl br b--light-gray hover-bg-light-gray`}
             >
