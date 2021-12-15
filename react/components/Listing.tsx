@@ -6,6 +6,7 @@ import React, { FC } from 'react'
 import { injectIntl } from 'react-intl'
 import PropTypes from 'prop-types'
 import { useCssHandles } from 'vtex.css-handles'
+import PhoneImage from './PhoneImage.svg';
 
 const CSS_HANDLES = [
   'addressList',
@@ -53,19 +54,14 @@ const Listing: FC<any> = ({ items, onChangeCenter }) => {
               <br />
               <span className={`${handles.addressStoreAddress}`}>
                 <span className={handles.addressStoreAddressGroupA}>
-                  <span className={handles.addressStoreAddressStreet}>
-                    {item.address.street + "\n"}
-                    <br />
-                  </span>
-                  <span className={handles.addressStoreAddressStreet}>
-                    {item.address.state ? `${item.address.state}` : ''}
-                    {item.address.postalCode ? ` - ${item.address.postalCode}\n` : ''}
-                    <br />
-                  </span>
-                  <span className={handles.addressStoreAddressStreet}>
-                    {item.instructions ? `${item.instructions}` : ''}
-                    <br />
-                  </span>
+                  {item.address.street}
+                  {item.address.postalCode ? `-  ${item.address.postalCode}` : null}
+                  <br />
+                </span>
+                <span className={handles.addressStoreAddressGroupA}>
+                  {item.instructions ? <img src={PhoneImage} alt="Phone Logo" style={{ height: 12 }} /> : null}
+                  {item.instructions ? `  ${item.instructions}` : null}
+                  <br />
                 </span>
               </span>
               <br />

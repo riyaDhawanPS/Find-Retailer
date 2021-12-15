@@ -84,7 +84,6 @@ const Pinpoints = (props: any) => {
             onClick={() => {
               handleMarkState(item.id)
             }}
-            label={item.name}
           >
 
             {state.markerState[item.id] && (
