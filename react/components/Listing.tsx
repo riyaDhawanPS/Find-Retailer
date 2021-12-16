@@ -53,16 +53,24 @@ const Listing: FC<any> = ({ items, onChangeCenter }) => {
               </span>
               <br />
               <span className={`${handles.addressStoreAddress}`}>
-                <span className={handles.addressStoreAddressGroupA}>
+                <span style={{ marginLeft: 30 }}>
                   {item.address.street}
-                  {item.address.postalCode ? `-  ${item.address.postalCode}` : null}
                   <br />
                 </span>
-                <span className={handles.addressStoreAddressGroupA}>
-                  {item.instructions ? <img src={PhoneImage} alt="Phone Logo" style={{ height: 12 }} /> : null}
-                  {item.instructions ? `  ${item.instructions}` : null}
+                <span style={{ marginLeft: 30 }}>
+                  {item.address.city}
+                  {item.address.postalCode ? ` - ${item.address.postalCode}` : null}
                   <br />
                 </span>
+                {
+                  item.instructions ?
+                    <span style={{ marginLeft: 30 }}>
+                      <img src={PhoneImage} alt="Phone Logo" style={{ height: 12 }} />
+                      {"    " + item.instructions}
+                      <br />
+                    </span> :
+                    null
+                }
               </span>
               <br />
             </li>

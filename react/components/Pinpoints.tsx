@@ -104,8 +104,6 @@ const Pinpoints = (props: any) => {
                   <br />
                   <span className={handles.markerInfoAddress}>
                     {item.address.street}
-                    {item.address.city ? `, ${item.address.city}` : ''}
-                    {item.address.state ? `, ${item.address.state}` : ''}
                     {item.address.postalCode
                       ? ` - ${item.address.postalCode}`
                       : ''}
@@ -115,7 +113,6 @@ const Pinpoints = (props: any) => {
                     className={`mt2 link c-link underline-hover pointer ${handles.markerInfoLink}`}
                     onClick={(e) => {
                       e.preventDefault()
-
                     }}
                   >
                   </span>
