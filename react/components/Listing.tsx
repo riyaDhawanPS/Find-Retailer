@@ -55,7 +55,7 @@ const Listing: FC<any> = ({ items, onChangeCenter }) => {
               </span>
               <br />
               <span className={`${handles.addressStoreAddress}`}>
-                <span style={{ marginLeft: 20, textAlign: "left" }}>
+                <span>
                   <p className={`${handles.addressStoreAddressStreet}`}>{item.address.street}</p>
                   <br />
                 </span>
