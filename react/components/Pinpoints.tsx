@@ -104,6 +104,7 @@ const Pinpoints = (props: any) => {
                   <br />
                   <span className={handles.markerInfoAddress}>
                     {item.address.street}
+                    {item.address.city}
                     {item.address.postalCode
                       ? ` - ${item.address.postalCode}`
                       : ''}

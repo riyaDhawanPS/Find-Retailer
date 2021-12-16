@@ -18,6 +18,8 @@ const CSS_HANDLES = [
   'addressStoreAddressNumber',
   'addressStoreAddressStreet',
   'addressListLink',
+  'addressStoreAddressPhoneNumber',
+  'addressStoreAddressCity_Postal'
 ] as const
 
 
@@ -53,18 +55,18 @@ const Listing: FC<any> = ({ items, onChangeCenter }) => {
               </span>
               <br />
               <span className={`${handles.addressStoreAddress}`}>
-                <span style={{ marginLeft: 30 }}>
-                  {item.address.street}
+                <span style={{ marginLeft: 20, textAlign: "left" }}>
+                  <p className={`${handles.addressStoreAddressStreet}`}>{item.address.street}</p>
                   <br />
                 </span>
-                <span style={{ marginLeft: 30 }}>
+                <span className={`${handles.addressStoreAddressCity_Postal}`}>
                   {item.address.city}
                   {item.address.postalCode ? ` - ${item.address.postalCode}` : null}
                   <br />
                 </span>
                 {
                   item.instructions ?
-                    <span style={{ marginLeft: 30 }}>
+                    <span className={`${handles.addressStoreAddressPhoneNumber}`}>
                       <img src={PhoneImage} alt="Phone Logo" style={{ height: 12 }} />
                       {"    " + item.instructions}
                       <br />
