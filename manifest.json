@@ -1,7 +1,7 @@
 {
   "vendor": "publicissapient",
   "name": "find-retailer",
-  "version": "0.1.1",
+  "version": "0.3.1",
   "title": "find retailer",
   "description": "Integrates with the logistics module to provide Store Locator pages",
   "builders": {
