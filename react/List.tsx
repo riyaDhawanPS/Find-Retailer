@@ -99,6 +99,7 @@ const StoreList = ({
   }, [ofData, ofCalled, ofLoading])
 
   const handleCenter = (center: any) => {
+
     setState({
       ...state,
       center,
@@ -114,15 +115,6 @@ const StoreList = ({
         }))
     }
 
-    if (!state.center && data?.getStores?.items.length) {
-      const [firstResult] = data.getStores.items
-
-      const { latitude, longitude } = firstResult.address.location
-      const center = [longitude || long, latitude || lat]
-
-      handleCenter(center)
-    }
-
     const stores =
       data?.getStores?.items.sort((a, b) => {
         if (a.address.number < b.address.number) {
@@ -135,6 +127,16 @@ const StoreList = ({
 
         return 0
       }) ?? []
+
+    if (!state.center && stores.length) {
+      const [firstResult] = stores
+
+      const { latitude, longitude } = firstResult.address.location
+      const center = [longitude || long, latitude || lat]
+
+      handleCenter(center)
+    }
+
 
     return (
       <div
@@ -164,7 +166,7 @@ const StoreList = ({
                   <Pinpoints
                     apiKey={googleMapsKeys.logistics.googleMapsKey}
                     className={handles.listingMapContainer}
-                    items={data.getStores.items}
+                    items={stores}
                     zoom={16}
                     center={state.center}
                     icon={icon}

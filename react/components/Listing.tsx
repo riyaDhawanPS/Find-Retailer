@@ -6,8 +6,7 @@ import React, { FC } from 'react'
 import { injectIntl } from 'react-intl'
 import PropTypes from 'prop-types'
 import { useCssHandles } from 'vtex.css-handles'
-import PhoneImage from './PhoneImage.svg';
-
+import ContactIcon from "../../public/metadata/PhoneImage.svg"
 const CSS_HANDLES = [
   'addressList',
   'addressListItem',
@@ -37,6 +36,7 @@ const Listing: FC<any> = ({ items, onChangeCenter }) => {
     items.length && (
       <ul className={`list ph3 mt0 ${handles.addressList}`}>
         {items.map((item: any, i: number) => {
+
           return (
             <li
               key={`key_${i}`}
@@ -67,7 +67,7 @@ const Listing: FC<any> = ({ items, onChangeCenter }) => {
                 {
                   item.instructions ?
                     <span className={`${handles.addressStoreAddressPhoneNumber}`}>
-                      <img src={PhoneImage} alt="Phone Logo" style={{ height: 12 }} />
+                      <img src={ContactIcon} alt="Phone Logo" style={{ height: 12 }} />
                       {"    " + item.instructions}
                       <br />
                     </span> :

@@ -83,7 +83,6 @@ const Pinpoints = (props: any) => {
     >
       {props.items.map((item: any, i: number) => {
         const { latitude, longitude } = item.address.location
-
         return (
           <Marker
             key={`marker_${i}`}
